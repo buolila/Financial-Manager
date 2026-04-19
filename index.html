@@ -27,30 +27,12 @@
             padding: 20px;
         }
 
-        /* الحاوية الرئيسية */
-        .container {
-            max-width: 1000px;
-            margin: auto;
-        }
+        .container { max-width: 1000px; margin: auto; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { color: var(--primary-color); margin-bottom: 5px; font-weight: 700; }
+        .header p { color: #747d8c; margin-top: 0; }
 
-        /* الهيدر */
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .header h1 {
-            color: var(--primary-color);
-            margin-bottom: 5px;
-            font-weight: 700;
-        }
-
-        .header p {
-            color: #747d8c;
-            margin-top: 0;
-        }
-
-        /* كروت الإحصائيات (Dashboard) */
+        /* الإحصائيات */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -63,48 +45,25 @@
             padding: 25px;
             border-radius: var(--border-radius);
             box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.3s ease;
             position: relative;
             overflow: hidden;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-        }
+        .card:hover { transform: translateY(-5px); }
+        .card-title { font-size: 14px; color: #a4b0be; margin-bottom: 10px; font-weight: 600; }
+        .card-value { font-size: 32px; font-weight: 700; }
+        .income { color: var(--success-color); }
+        .expense { color: var(--danger-color); }
+        .balance { color: var(--primary-color); }
 
-        .card-title {
-            font-size: 14px;
-            color: #a4b0be;
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-
-        .card-value {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--text-color);
-        }
-
-        .card-value.income { color: var(--success-color); }
-        .card-value.expense { color: var(--danger-color); }
-        .card-value.balance { color: var(--primary-color); }
-
-        /* تزيين الكروت بلمسة لونية */
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 5px;
-            height: 100%;
-        }
+        .card::before { content: ''; position: absolute; top: 0; right: 0; width: 5px; height: 100%; }
         .income-card::before { background-color: var(--success-color); }
         .expense-card::before { background-color: var(--danger-color); }
         .balance-card::before { background-color: var(--primary-color); }
 
-        /* منطقة الإدخال */
-        .input-section {
+        /* الأقسام المشتركة */
+        .input-section, .table-section, .summary-section {
             background-color: var(--card-bg);
             padding: 20px;
             border-radius: var(--border-radius);
@@ -112,118 +71,30 @@
             margin-bottom: 30px;
         }
 
-        .input-title {
-            margin-bottom: 15px;
-            font-weight: 600;
-            color: var(--primary-color);
-        }
+        .section-title { margin-bottom: 15px; font-weight: 600; color: var(--primary-color); }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr auto;
-            gap: 15px;
-        }
+        .form-grid { display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 15px; }
+        @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } }
 
-        @media (max-width: 768px) {
-            .form-grid { grid-template-columns: 1fr; }
-        }
+        input, select { padding: 12px 15px; border: 1px solid #dfe4ea; border-radius: 8px; font-family: 'Cairo'; font-size: 14px; }
+        button.btn-add { background-color: var(--primary-color); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; cursor: pointer; }
 
-        input, select {
-            padding: 12px 15px;
-            border: 1px solid #dfe4ea;
-            border-radius: 8px;
-            font-family: 'Cairo', sans-serif;
-            font-size: 14px;
-            transition: border-color 0.3s;
-        }
+        /* التقرير الشهري */
+        .monthly-report-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+        .monthly-item { padding: 15px; background: #f8f9fa; border-radius: 8px; border-right: 4px solid var(--danger-color); }
+        .month-name { display: block; font-weight: 700; font-size: 14px; color: #576574; }
+        .month-total { display: block; font-size: 18px; color: var(--danger-color); font-weight: 700; margin-top: 5px; }
 
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--secondary-color);
-            box-shadow: 0 0 0 3px rgba(106, 137, 204, 0.1);
-        }
-
-        button.btn-add {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            font-family: 'Cairo', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        button.btn-add:hover {
-            background-color: #3c569b;
-        }
-
-        /* ستايل زر الحذف الجديد */
-        .btn-delete {
-            background-color: #fff;
-            color: var(--danger-color);
-            border: 1px solid var(--danger-color);
-            padding: 5px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-family: 'Cairo', sans-serif;
-            font-size: 12px;
-            transition: 0.3s;
-        }
-
-        .btn-delete:hover {
-            background-color: var(--danger-color);
-            color: #fff;
-        }
-
-        /* جدول العمليات */
-        .table-section {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: var(--border-radius);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        .table-title {
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-
-        th, td {
-            text-align: right;
-            padding: 15px;
-            border-bottom: 1px solid #f1f2f6;
-        }
-
-        th {
-            color: #a4b0be;
-            font-weight: 600;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover td {
-            background-color: #f8f9fa;
-        }
-
-        .amount-tag {
-            font-weight: 700;
-            padding: 4px 8px;
-            border-radius: 6px;
-        }
-
+        /* الجدول */
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+        th, td { text-align: right; padding: 15px; border-bottom: 1px solid #f1f2f6; }
+        th { color: #a4b0be; }
+        .amount-tag { font-weight: 700; padding: 4px 8px; border-radius: 6px; }
         .amount-income { background-color: #e3faf3; color: var(--success-color); }
         .amount-expense { background-color: #ffefef; color: var(--danger-color); }
 
+        .btn-delete { background: #fff; color: var(--danger-color); border: 1px solid var(--danger-color); padding: 5px 12px; border-radius: 6px; cursor: pointer; font-family: 'Cairo'; transition: 0.3s; }
+        .btn-delete:hover { background: var(--danger-color); color: #fff; }
     </style>
 </head>
 <body>
@@ -231,10 +102,10 @@
 <div class="container">
     <div class="header">
         <h1>المدير المالي</h1>
-        <p>بوابتك الذكية لتتبع الإيرادات والمصروفات</p>
+        <p>تتبع ذكي للإيرادات والمصروفات والتقارير الشهرية</p>
     </div>
 
-       <div class="stats-grid">
+    <div class="stats-grid">
         <div class="card income-card">
             <div class="card-title">إجمالي الإيرادات</div>
             <div class="card-value income"><span id="total-income">0.00</span> ج.م</div>
@@ -250,9 +121,9 @@
     </div>
 
     <div class="input-section">
-        <div class="input-title">إضافة عملية جديدة</div>
+        <div class="section-title">إضافة عملية جديدة</div>
         <form id="transaction-form" class="form-grid">
-            <input type="text" id="desc" placeholder="وصف العملية (مثلاً: فاتورة مبيعات، إيجار المكتب)" required>
+            <input type="text" id="desc" placeholder="وصف العملية..." required>
             <input type="number" id="amount" placeholder="المبلغ" required step="0.01">
             <select id="type">
                 <option value="income">إيراد (+)</option>
@@ -262,8 +133,14 @@
         </form>
     </div>
 
+    <div class="summary-section">
+        <div class="section-title">ملخص المصروفات الشهرية</div>
+        <div id="monthly-report" class="monthly-report-grid">
+            </div>
+    </div>
+
     <div class="table-section">
-        <div class="table-title">سجل العمليات الأخير</div>
+        <div class="section-title">سجل العمليات الأخير</div>
         <table>
             <thead>
                 <tr>
@@ -274,8 +151,7 @@
                     <th>إجراء</th>
                 </tr>
             </thead>
-            <tbody id="table-body">
-                </tbody>
+            <tbody id="table-body"></tbody>
         </table>
     </div>
 </div>
@@ -283,11 +159,10 @@
 <script>
     const form = document.getElementById('transaction-form');
     const tableBody = document.getElementById('table-body');
+    const monthlyReportDiv = document.getElementById('monthly-report');
     
-    // محاكاة لذاكرة (LocalStorage)
     let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
 
-    // وظيفة لتنسيق الأرقام
     function formatMoney(amount) {
         return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
     }
@@ -295,12 +170,18 @@
     function updateDashboard() {
         let totalIncome = 0;
         let totalExpenses = 0;
+        let monthlyStats = {}; // لتجميع المصاريف حسب الشهر
 
         transactions.forEach(tx => {
             if (tx.type === 'income') {
                 totalIncome += tx.amount;
             } else {
                 totalExpenses += tx.amount;
+                // تجميع المصاريف لكل شهر
+                if (!monthlyStats[tx.monthGroup]) {
+                    monthlyStats[tx.monthGroup] = 0;
+                }
+                monthlyStats[tx.monthGroup] += tx.amount;
             }
         });
 
@@ -308,21 +189,39 @@
         document.getElementById('total-expenses').innerText = formatMoney(totalExpenses);
         document.getElementById('net-profit').innerText = formatMoney(totalIncome - totalExpenses);
         
+        renderMonthlyReport(monthlyStats);
         localStorage.setItem('transactions', JSON.stringify(transactions));
     }
 
-    // وظيفة الحذف الجديدة
+    function renderMonthlyReport(stats) {
+        monthlyReportDiv.innerHTML = '';
+        const months = Object.keys(stats).sort().reverse(); // ترتيب الشهور من الأحدث
+
+        if (months.length === 0) {
+            monthlyReportDiv.innerHTML = '<p style="font-size:12px; color:#a4b0be;">لا يوجد بيانات شهرية حالياً.</p>';
+            return;
+        }
+
+        months.forEach(month => {
+            const item = `
+                <div class="monthly-item">
+                    <span class="month-name">${month}</span>
+                    <span class="month-total">${formatMoney(stats[month])} ج.م</span>
+                </div>`;
+            monthlyReportDiv.insertAdjacentHTML('beforeend', item);
+        });
+    }
+
     function deleteTransaction(index) {
         if(confirm("هل أنت متأكد من حذف هذه العملية؟")) {
-            transactions.splice(index, 1); // حذف العنصر من المصفوفة
-            renderTable(); // إعادة بناء الجدول
-            updateDashboard(); // تحديث الأرقام في الأعلى
+            transactions.splice(index, 1);
+            renderTable();
+            updateDashboard();
         }
     }
 
     function renderTable() {
         tableBody.innerHTML = '';
-        // نقوم برسم الجدول مع إعطاء كل زر حذف رقم الـ Index الخاص به
         transactions.forEach((tx, index) => {
             const isIncome = tx.type === 'income';
             const row = `<tr>
@@ -332,20 +231,27 @@
                 <td>${isIncome ? 'إيراد' : 'مصروف'}</td>
                 <td><button class="btn-delete" onclick="deleteTransaction(${index})">حذف 🗑️</button></td>
             </tr>`;
-            // نستخدم prepend (أو إضافة في البداية) ليظهر الأحدث فوق
             tableBody.insertAdjacentHTML('afterbegin', row); 
         });
     }
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
+        const dateObj = new Date();
+        
+        // التاريخ الكامل للعرض في الجدول
+        const fullDate = dateObj.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
+        
+        // اسم الشهر والسنة للتجميع (مثال: مايو 2026)
+        const monthGroup = dateObj.toLocaleDateString('ar-EG', { year: 'numeric', month: 'long' });
 
-        const desc = document.getElementById('desc').value;
-        const amount = parseFloat(document.getElementById('amount').value);
-        const type = document.getElementById('type').value;
-        const date = new Date().toLocaleDateString('ar-EG', { year: 'numeric', month: 'long', day: 'numeric' });
-
-        transactions.push({ desc, amount, type, date });
+        transactions.push({ 
+            desc: document.getElementById('desc').value, 
+            amount: parseFloat(document.getElementById('amount').value), 
+            type: document.getElementById('type').value, 
+            date: fullDate,
+            monthGroup: monthGroup 
+        });
         
         renderTable();
         updateDashboard();
@@ -353,10 +259,8 @@
         document.getElementById('desc').focus();
     });
 
-    // تحميل البيانات عند فتح الصفحة
     renderTable();
     updateDashboard();
-
 </script>
 
 </body>
