@@ -3,18 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المدير المالي الاحترافي</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>نظام المحاسبة السحابي الاحترافي</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
+        /* الألوان وتنسيقات النظام */
         :root {
-            --primary-color: #4a69bd;
-            --secondary-color: #6a89cc;
-            --success-color: #1dd1a1;
-            --danger-color: #ff6b6b;
-            --bg-color: #f1f2f6;
-            --text-color: #2f3542;
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary-color: #64748b;
+            --success-color: #10b981;
+            --danger-color: #ef4444;
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
             --card-bg: #ffffff;
+            --border-color: #e2e8f0;
             --border-radius: 12px;
+            --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
         }
 
         body {
@@ -22,15 +26,144 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        /* شاشة تسجيل الدخول */
+        .login-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0f172a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .login-card {
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .login-card h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .login-card p {
+            color: var(--secondary-color);
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: all 0.2s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        }
+
+        .btn-login {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            transition: background 0.2s;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .error-msg {
+            color: var(--danger-color);
+            font-size: 13px;
+            margin-top: 12px;
+            display: none;
+            font-weight: 600;
+        }
+
+        /* لوحة التحكم (الدشبورد) */
+        .dashboard {
+            display: none;
             padding: 20px;
         }
 
         .container { max-width: 1000px; margin: auto; }
-        .header { text-align: center; margin-bottom: 30px; }
-        .header h1 { color: var(--primary-color); margin-bottom: 5px; font-weight: 700; }
-        .header p { color: #747d8c; margin-top: 0; }
+        
+        .header { 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
 
-        /* Cards */
+        .header-title h1 { color: var(--primary-color); margin: 0 0 5px 0; font-weight: 800; font-size: 26px; }
+        .header-title p { color: var(--secondary-color); margin: 0; font-size: 14px; }
+
+        .btn-logout {
+            background-color: #ef444415;
+            color: var(--danger-color);
+            border: 1px solid #ef444430;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .btn-logout:hover {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        /* الكروت والإحصائيات */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -40,133 +173,227 @@
 
         .card {
             background-color: var(--card-bg);
-            padding: 25px;
+            padding: 24px;
             border-radius: var(--border-radius);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--border-color);
             position: relative;
             overflow: hidden;
         }
 
-        .card:hover { transform: translateY(-5px); }
-        .card-title { font-size: 14px; color: #a4b0be; margin-bottom: 10px; font-weight: 600; }
-        .card-value { font-size: 28px; font-weight: 700; }
+        .card-title { font-size: 14px; color: var(--secondary-color); margin-bottom: 10px; font-weight: 600; }
+        .card-value { font-size: 28px; font-weight: 800; }
         .income { color: var(--success-color); }
         .expense { color: var(--danger-color); }
         .balance { color: var(--primary-color); }
 
-        .card::before { content: ''; position: absolute; top: 0; right: 0; width: 5px; height: 100%; }
+        .card::before { content: ''; position: absolute; top: 0; right: 0; width: 6px; height: 100%; }
         .income-card::before { background-color: var(--success-color); }
         .expense-card::before { background-color: var(--danger-color); }
         .balance-card::before { background-color: var(--primary-color); }
 
-        /* Sections */
+        /* الأقسام والنموذج */
         .input-section, .table-section, .summary-section {
             background-color: var(--card-bg);
-            padding: 20px;
+            padding: 24px;
             border-radius: var(--border-radius);
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            box-shadow: var(--box-shadow);
+            border: 1px solid var(--border-color);
             margin-bottom: 30px;
         }
 
-        .section-title { margin-bottom: 15px; font-weight: 600; color: var(--primary-color); }
+        .section-title { margin-bottom: 18px; font-weight: 700; color: var(--text-color); font-size: 18px; }
 
         .form-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr auto; gap: 12px; }
         @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } }
 
-        input, select { padding: 12px 15px; border: 1px solid #dfe4ea; border-radius: 8px; font-family: 'Cairo'; font-size: 14px; outline: none; }
-        input:focus, select:focus { border-color: var(--primary-color); }
+        button.btn-add { 
+            background-color: var(--primary-color); 
+            color: white; 
+            border: none; 
+            padding: 12px 24px; 
+            border-radius: 8px; 
+            font-weight: 700; 
+            cursor: pointer; 
+            font-family: 'Cairo', sans-serif;
+            transition: background 0.2s; 
+        }
 
-        button.btn-add { background-color: var(--primary-color); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        button.btn-add:hover { background-color: var(--secondary-color); }
+        button.btn-add:hover { background-color: var(--primary-hover); }
 
-        /* Reports */
+        /* التقارير */
         .monthly-report-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
-        .monthly-item { padding: 15px; background: #f8f9fa; border-radius: 8px; border-right: 4px solid var(--danger-color); }
-        .month-name { display: block; font-weight: 700; font-size: 14px; color: #576574; }
-        .month-total { display: block; font-size: 18px; color: var(--danger-color); font-weight: 700; margin-top: 5px; }
+        .monthly-item { padding: 16px; background: #f8fafc; border-radius: 8px; border: 1px solid var(--border-color); border-right: 4px solid var(--danger-color); }
+        .month-name { display: block; font-weight: 700; font-size: 14px; color: var(--secondary-color); }
+        .month-total { display: block; font-size: 18px; color: var(--danger-color); font-weight: 800; margin-top: 4px; }
 
-        /* Table */
+        /* الجدول */
         table { width: 100%; border-collapse: collapse; font-size: 14px; }
-        th, td { text-align: right; padding: 15px; border-bottom: 1px solid #f1f2f6; }
-        th { color: #a4b0be; }
-        .amount-tag { font-weight: 700; padding: 4px 8px; border-radius: 6px; }
-        .amount-income { background-color: #e3faf3; color: var(--success-color); }
-        .amount-expense { background-color: #ffefef; color: var(--danger-color); }
+        th, td { text-align: right; padding: 14px; border-bottom: 1px solid var(--border-color); }
+        th { color: var(--secondary-color); font-weight: 600; background-color: #f8fafc; }
+        .amount-tag { font-weight: 700; padding: 4px 10px; border-radius: 6px; display: inline-block; }
+        .amount-income { background-color: #d1fae5; color: #065f46; }
+        .amount-expense { background-color: #fee2e2; color: #991b1b; }
 
-        .btn-delete { background: #fff; color: var(--danger-color); border: 1px solid var(--danger-color); padding: 5px 12px; border-radius: 6px; cursor: pointer; font-family: 'Cairo'; transition: 0.3s; }
+        .btn-delete { 
+            background: #fff; 
+            color: var(--danger-color); 
+            border: 1px solid var(--danger-color); 
+            padding: 6px 12px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-family: 'Cairo', sans-serif; 
+            font-weight: 600;
+            transition: 0.2s; 
+        }
+
         .btn-delete:hover { background: var(--danger-color); color: #fff; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1>المدير المالي</h1>
-        <p>تتبع ذكي للإيرادات والمصروفات والتقارير الشهرية</p>
-    </div>
+<!-- شاشة تسجيل الدخول -->
+<div id="login-overlay" class="login-overlay">
+    <div class="login-card">
+        <h2>المدير المالي</h2>
+        <p>قم بتسجيل الدخول للوصول إلى لوحة التحكم</p>
+        
+        <form id="login-form">
+            <div class="form-group">
+                <label for="login-email">البريد الإلكتروني</label>
+                <input type="email" id="login-email" class="form-control" placeholder="admin@gmail.com" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="login-password">كلمة المرور</label>
+                <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+            </div>
 
-    <div class="stats-grid">
-        <div class="card income-card">
-            <div class="card-title">إجمالي الإيرادات</div>
-            <div class="card-value income"><span id="total-income">0.00</span> ج.م</div>
-        </div>
-        <div class="card expense-card">
-            <div class="card-title">إجمالي المصروفات</div>
-            <div class="card-value expense"><span id="total-expenses">0.00</span> ج.م</div>
-        </div>
-        <div class="card balance-card">
-            <div class="card-title">صافي الربح الحالي</div>
-            <div class="card-value balance"><span id="net-profit">0.00</span> ج.م</div>
-        </div>
-    </div>
-
-    <div class="input-section">
-        <div class="section-title">إضافة عملية جديدة</div>
-        <form id="transaction-form" class="form-grid">
-            <input type="text" id="desc" placeholder="وصف العملية..." required>
-            <input type="number" id="amount" placeholder="المبلغ" required step="0.01">
-            <select id="type">
-                <option value="income">إيراد (+)</option>
-                <option value="expense">مصروف (-)</option>
-            </select>
-            <input type="date" id="date-input" required>
-            <button type="submit" class="btn-add">إضافة</button>
+            <button type="submit" class="btn-login">تسجيل الدخول</button>
+            <div id="error-msg" class="error-msg">البريد الإلكتروني أو كلمة المرور غير صحيحة!</div>
         </form>
     </div>
+</div>
 
-    <div class="summary-section">
-        <div class="section-title">ملخص المصروفات الشهرية</div>
-        <div id="monthly-report" class="monthly-report-grid"></div>
-    </div>
+<!-- لوحة التحكم الحقيقية -->
+<div id="dashboard" class="dashboard">
+    <div class="container">
+        <div class="header">
+            <div class="header-title">
+                <h1>المدير المالي الاحترافي</h1>
+                <p>تتبع ذكي للإيرادات والمصروفات والتقارير الشهرية</p>
+            </div>
+            <button class="btn-logout" onclick="logout()">تسجيل الخروج 🚪</button>
+        </div>
 
-    <div class="table-section">
-        <div class="section-title">سجل العمليات الأخير</div>
-        <table>
-            <thead>
-                <tr>
-                    <th>التاريخ</th>
-                    <th>الوصف</th>
-                    <th>المبلغ</th>
-                    <th>النوع</th>
-                    <th>إجراء</th>
-                </tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-        </table>
+        <div class="stats-grid">
+            <div class="card income-card">
+                <div class="card-title">إجمالي الإيرادات</div>
+                <div class="card-value income"><span id="total-income">0.00</span> ج.م</div>
+            </div>
+            <div class="card expense-card">
+                <div class="card-title">إجمالي المصروفات</div>
+                <div class="card-value expense"><span id="total-expenses">0.00</span> ج.م</div>
+            </div>
+            <div class="card balance-card">
+                <div class="card-title">صافي الربح الحالي</div>
+                <div class="card-value balance"><span id="net-profit">0.00</span> ج.م</div>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <div class="section-title">إضافة عملية جديدة</div>
+            <form id="transaction-form" class="form-grid">
+                <input type="text" id="desc" class="form-control" placeholder="وصف العملية..." required>
+                <input type="number" id="amount" class="form-control" placeholder="المبلغ" required step="0.01">
+                <select id="type" class="form-control">
+                    <option value="income">إيراد (+)</option>
+                    <option value="expense">مصروف (-)</option>
+                </select>
+                <input type="date" id="date-input" class="form-control" required>
+                <button type="submit" class="btn-add">إضافة</button>
+            </form>
+        </div>
+
+        <div class="summary-section">
+            <div class="section-title">ملخص المصروفات الشهرية</div>
+            <div id="monthly-report" class="monthly-report-grid"></div>
+        </div>
+
+        <div class="table-section">
+            <div class="section-title">سجل العمليات الأخير</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>التاريخ</th>
+                        <th>الوصف</th>
+                        <th>المبلغ</th>
+                        <th>النوع</th>
+                        <th>إجراء</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </div>
     </div>
 </div>
 
 <script>
+    // عناصر تسجيل الدخول
+    const loginOverlay = document.getElementById('login-overlay');
+    const dashboard = document.getElementById('dashboard');
+    const loginForm = document.getElementById('login-form');
+    const errorMsg = document.getElementById('error-msg');
+
+    // البيانات المسموح لها بالدخول
+    const AUTH_EMAIL = "admin@gmail.com";
+    const AUTH_PASS = "123@admin";
+
+    // التحقق من حالة الجلسة عند التحميل
+    if (localStorage.getItem('isLoggedIn') === 'true') {
+        showDashboard();
+    }
+
+    loginForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value.trim();
+
+        if (email === AUTH_EMAIL && password === AUTH_PASS) {
+            localStorage.setItem('isLoggedIn', 'true');
+            errorMsg.style.display = 'none';
+            showDashboard();
+        } else {
+            errorMsg.style.display = 'block';
+        }
+    });
+
+    function showDashboard() {
+        loginOverlay.style.display = 'none';
+        dashboard.style.display = 'block';
+        initApp();
+    }
+
+    function logout() {
+        localStorage.removeItem('isLoggedIn');
+        loginOverlay.style.display = 'flex';
+        dashboard.style.display = 'none';
+    }
+
+    // إدارة العمليات المحاسبية
     const form = document.getElementById('transaction-form');
     const tableBody = document.getElementById('table-body');
     const monthlyReportDiv = document.getElementById('monthly-report');
     const dateInput = document.getElementById('date-input');
 
-    // تعيين تاريخ اليوم كقيمة افتراضية في حقل التاريخ
-    dateInput.valueAsDate = new Date();
+    let transactions = [];
 
-    let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+    function initApp() {
+        dateInput.valueAsDate = new Date();
+        transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+        renderTable();
+        updateDashboard();
+    }
 
     function formatMoney(amount) {
         return amount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
@@ -202,7 +429,7 @@
         const months = Object.keys(stats).sort().reverse();
 
         if (months.length === 0) {
-            monthlyReportDiv.innerHTML = '<p style="font-size:12px; color:#a4b0be;">لا يوجد بيانات شهرية حالياً.</p>';
+            monthlyReportDiv.innerHTML = '<p style="font-size:13px; color:#94a3b8;">لا يوجد بيانات شهرية حالياً.</p>';
             return;
         }
 
@@ -229,7 +456,7 @@
         transactions.forEach((tx, index) => {
             const isIncome = tx.type === 'income';
             const row = `<tr>
-                <td style="color: #747d8c;">${tx.date}</td>
+                <td style="color: #64748b;">${tx.date}</td>
                 <td style="font-weight: 600;">${tx.desc}</td>
                 <td><span class="amount-tag ${isIncome ? 'amount-income' : 'amount-expense'}">${isIncome ? '+' : '-'}${formatMoney(tx.amount)}</span></td>
                 <td>${isIncome ? 'إيراد' : 'مصروف'}</td>
@@ -260,10 +487,7 @@
         dateInput.valueAsDate = new Date();
         document.getElementById('desc').focus();
     });
-
-    renderTable();
-    updateDashboard();
 </script>
 
 </body>
-</html>
+</html>d
